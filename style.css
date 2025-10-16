@@ -45,6 +45,19 @@ header {
 #filterMenu.hidden {
   display: none;
 }
+#filterMenu h4 {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 3px;
+  color: #333;
+}
+
+.tag-option {
+  font-size: 0.9em;
+  display: inline-block;
+  margin: 3px 0;
+}
 
 #characterList {
   display: grid;
@@ -82,3 +95,4 @@ header {
   display: inline-block;
   font-size: 0.8em;
 }
+
