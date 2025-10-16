@@ -75,8 +75,8 @@ header {
 /* Botão de fechar */
 #closeFilters {
   position: absolute;
-  top: 10px;
-  right: -35px;
+  top: 51%;
+  right: 10px;
   border: 2px solid #ccc;
   border-radius: 50%;
   width: 30px;
@@ -86,9 +86,8 @@ header {
   font-weight: bold;
   z-index: 99;
   background:red;
-  position: absolute; 
+  position: fixed; 
   top: 1;
-  left: 283px;
   color: #333;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   transition: background 0.2s ease;
@@ -157,6 +156,7 @@ header {
   display: inline-block;
   font-size: 0.8em;
 }
+
 
 
 
