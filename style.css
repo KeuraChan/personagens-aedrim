@@ -245,11 +245,11 @@ header {
   padding: 1rem;
   box-shadow: 0 0 8px rgba(0,0,0,0.1);
   cursor: pointer;
-  transition: transform 0.8s ease-in-out; 
+  transition: transform 0.2s ease-in-out; 
 }
 
 .character-card:hover{
-   transform: scale(1.2);
+   transform: scale(1.05);
 }
 
 .character-card img {
@@ -274,6 +274,7 @@ header {
   display: inline-block;
   font-size: 0.8em;
 }
+
 
 
 
