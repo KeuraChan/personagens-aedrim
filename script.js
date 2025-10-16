@@ -32,6 +32,10 @@ overlay.onclick = fecharMenu;
 function fecharMenu() {
   filterMenu.classList.remove("active");
   overlay.classList.remove("active");
+  // após a animação, recoloca o display:none
+  setTimeout(() => {
+    filterMenu.classList.add("hidden");
+  }, 300); // mesmo tempo da transição no CSS
 }
 
 // Renderiza lista de personagens
@@ -111,4 +115,5 @@ function applyFilters() {
 
   renderCharacters(filtrados);
 }
+
 
