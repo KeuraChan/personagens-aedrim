@@ -20,6 +20,7 @@ window.onload = () => {
 filterButton.onclick = () => {
   filterMenu.classList.add("active");
   overlay.classList.add("active");
+  filterMenu.classList.remove("hidden");
 };
 
 // Fecha ao clicar no botão ✕
@@ -110,3 +111,4 @@ function applyFilters() {
 
   renderCharacters(filtrados);
 }
+
