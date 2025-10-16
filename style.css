@@ -1,0 +1,84 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+header {
+  background: #333;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+.search-area {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.search-area input {
+  padding: 8px;
+  width: 200px;
+}
+
+.search-area button {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+#filterMenu {
+  background: #fff;
+  border-right: 2px solid #ccc;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  padding: 1rem;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+}
+
+#filterMenu.hidden {
+  display: none;
+}
+
+#characterList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 1rem;
+}
+
+.character-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.character-card img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.character-card h2 {
+  margin: 10px 0 5px;
+}
+
+.character-card p {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.tag {
+  background: #ddd;
+  border-radius: 4px;
+  padding: 3px 6px;
+  margin: 2px;
+  display: inline-block;
+  font-size: 0.8em;
+}

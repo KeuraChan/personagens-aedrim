@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizador de Personagens</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Visualizador de Personagens</h1>
+    <div class="search-area">
+      <input type="text" id="searchInput" placeholder="Buscar personagem...">
+      <button id="filterButton">Filtros ⚙️</button>
+    </div>
+  </header>
+
+  <aside id="filterMenu" class="hidden">
+    <h3>Filtrar por tags</h3>
+    <div id="tagList"></div>
+    <button id="closeFilters">Fechar</button>
+  </aside>
+
+  <main id="characterList"></main>
+
+  <script src="personagens.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
