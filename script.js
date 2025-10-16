@@ -151,7 +151,6 @@ function abrirModal(personagem) {
   document.getElementById("prevImage").onclick = () => mudarImagem(-1);
   document.getElementById("nextImage").onclick = () => mudarImagem(1);
 
-  const container = document.getElementById("carouselContainer");
   container.addEventListener("mousedown", iniciarArraste);
   container.addEventListener("touchstart", iniciarArraste);
   container.addEventListener("mousemove", moverArraste);
@@ -216,4 +215,5 @@ function terminarArraste(e) {
   else if (deltaX < -80) mudarImagem(1);
   else atualizarCarrossel();
 }
+
 
