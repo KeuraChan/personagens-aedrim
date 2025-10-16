@@ -39,21 +39,47 @@ function renderCharacters(lista) {
 
 // Cria as opções de filtro por tag
 function renderTags() {
-  const allTags = [...new Set(personagens.flatMap(p => p.tags))];
-  tagList.innerHTML = allTags.map(tag => `
-    <label>
-      <input type="checkbox" value="${tag}">
-      ${tag}
-    </label><br>
-  `).join("");
+  tagList.innerHTML = "";
 
-  tagList.querySelectorAll("input").forEach(chk => {
-    chk.onchange = () => {
-      if (chk.checked) selectedTags.add(chk.value);
-      else selectedTags.delete(chk.value);
-      applyFilters();
-    };
-  });
+  // Percorre cada categoria (Raça, Classe, Ocupação, Afinidade)
+  for (const categoria in TODAS_AS_TAGS) {
+    const grupo = TODAS_AS_TAGS[categoria];
+
+    // Cria um contêiner de categoria
+    const categoriaDiv = document.createElement("div");
+    categoriaDiv.className = "categoria-tags";
+
+    const titulo = document.createElement("h4");
+    titulo.textContent = categoria;
+    categoriaDiv.appendChild(titulo);
+
+    // Cria os checkboxes para cada tag dentro dessa categoria
+    for (const key in grupo) {
+      const valor = grupo[key];
+
+      const label = document.createElement("label");
+      label.className = "tag-option";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.value = valor;
+
+      checkbox.onchange = () => {
+        if (checkbox.checked) selectedTags.add(valor);
+        else selectedTags.delete(valor);
+        applyFilters();
+      };
+
+      label.appendChild(checkbox);
+      label.append(" " + valor);
+
+      categoriaDiv.appendChild(label);
+      categoriaDiv.appendChild(document.createElement("br"));
+    }
+
+    // Adiciona o grupo ao menu
+    tagList.appendChild(categoriaDiv);
+  }
 }
 
 // Aplica busca + filtros
@@ -75,3 +101,4 @@ function applyFilters() {
 
   renderCharacters(filtrados);
 }
+
