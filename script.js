@@ -5,6 +5,7 @@ const filterButton = document.getElementById("filterButton");
 const filterMenu = document.getElementById("filterMenu");
 const tagList = document.getElementById("tagList");
 const closeFilters = document.getElementById("closeFilters");
+const overlay = document.getElementById("overlay");
 
 // Estado atual dos filtros
 let selectedTags = new Set();
@@ -15,9 +16,22 @@ window.onload = () => {
   renderCharacters(personagens);
 };
 
-// Exibe/oculta menu de filtros
-filterButton.onclick = () => filterMenu.classList.toggle("hidden");
-closeFilters.onclick = () => filterMenu.classList.add("hidden");
+// Exibe menu de filtros com animação e desfoque
+filterButton.onclick = () => {
+  filterMenu.classList.add("active");
+  overlay.classList.add("active");
+};
+
+// Fecha ao clicar no botão ✕
+closeFilters.onclick = fecharMenu;
+
+// Fecha ao clicar fora do menu
+overlay.onclick = fecharMenu;
+
+function fecharMenu() {
+  filterMenu.classList.remove("active");
+  overlay.classList.remove("active");
+}
 
 // Renderiza lista de personagens
 function renderCharacters(lista) {
@@ -41,11 +55,9 @@ function renderCharacters(lista) {
 function renderTags() {
   tagList.innerHTML = "";
 
-  // Percorre cada categoria (Raça, Classe, Ocupação, Afinidade)
   for (const categoria in TODAS_AS_TAGS) {
     const grupo = TODAS_AS_TAGS[categoria];
 
-    // Cria um contêiner de categoria
     const categoriaDiv = document.createElement("div");
     categoriaDiv.className = "categoria-tags";
 
@@ -53,7 +65,6 @@ function renderTags() {
     titulo.textContent = categoria;
     categoriaDiv.appendChild(titulo);
 
-    // Cria os checkboxes para cada tag dentro dessa categoria
     for (const key in grupo) {
       const valor = grupo[key];
 
@@ -72,12 +83,10 @@ function renderTags() {
 
       label.appendChild(checkbox);
       label.append(" " + valor);
-
       categoriaDiv.appendChild(label);
       categoriaDiv.appendChild(document.createElement("br"));
     }
 
-    // Adiciona o grupo ao menu
     tagList.appendChild(categoriaDiv);
   }
 }
@@ -101,4 +110,3 @@ function applyFilters() {
 
   renderCharacters(filtrados);
 }
-
