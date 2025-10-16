@@ -85,6 +85,7 @@ header {
   cursor: pointer;
   font-size: 18px;
   font-weight: bold;
+  z-index: 99;
   color: #333;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   transition: background 0.2s ease;
@@ -153,5 +154,6 @@ header {
   display: inline-block;
   font-size: 0.8em;
 }
+
 
 
