@@ -151,13 +151,15 @@ function abrirModal(personagem) {
   document.getElementById("prevImage").onclick = () => mudarImagem(-1);
   document.getElementById("nextImage").onclick = () => mudarImagem(1);
 
-  carouselTrack.addEventListener("mousedown", iniciarArraste);
-  carouselTrack.addEventListener("touchstart", iniciarArraste);
-  carouselTrack.addEventListener("mousemove", moverArraste);
-  carouselTrack.addEventListener("touchmove", moverArraste);
-  carouselTrack.addEventListener("mouseup", terminarArraste);
-  carouselTrack.addEventListener("mouseleave", terminarArraste);
-  carouselTrack.addEventListener("touchend", terminarArraste);
+  const container = document.getElementById("carouselContainer");
+  container.addEventListener("mousedown", iniciarArraste);
+  container.addEventListener("touchstart", iniciarArraste);
+  container.addEventListener("mousemove", moverArraste);
+  container.addEventListener("touchmove", moverArraste);
+  container.addEventListener("mouseup", terminarArraste);
+  container.addEventListener("mouseleave", terminarArraste);
+  container.addEventListener("touchend", terminarArraste);
+
 
   modal.classList.add("active");
   modalOverlay.classList.add("active");
@@ -214,3 +216,4 @@ function terminarArraste(e) {
   else if (deltaX < -80) mudarImagem(1);
   else atualizarCarrossel();
 }
+
