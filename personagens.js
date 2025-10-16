@@ -9,10 +9,11 @@ var personagens = [
   },
   {
     nome: "Elkas",
-    imagens: ["Elkas1.jpeg"],
+    imagens: ["Elkas1.jpg"],
     resumo: "Taverneiro de Dragão Dormente",
     descricao: "Alegre Elfo da Lua. Se tornou Taverneiro já há séculos, sempre com um sorriso no rosto, uma espada sempre embainhada na cintura, é amigável, sempre cumprimentando todos que chegam e disposto a oferecer bebidas.",
     nascimento: "???",
     tags: ["Elfo", "Taverneiro", "Dragão Dormente", "Comerciante"]
   },
 ];
+
