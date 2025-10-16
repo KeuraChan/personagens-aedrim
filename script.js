@@ -116,4 +116,69 @@ function applyFilters() {
   renderCharacters(filtrados);
 }
 
+// === MODAL DE DETALHES ===
+const modal = document.getElementById("characterModal");
+const modalOverlay = document.getElementById("modalOverlay");
+const closeModal = document.getElementById("closeModal");
+const modalName = document.getElementById("modalName");
+const modalImage = document.getElementById("modalImage");
+const modalDescription = document.getElementById("modalDescription");
+const prevImage = document.getElementById("prevImage");
+const nextImage = document.getElementById("nextImage");
 
+let currentCharacter = null;
+let currentImageIndex = 0;
+
+// Evento para abrir o modal ao clicar em um personagem
+function renderCharacters(lista) {
+  characterList.innerHTML = "";
+  lista.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "character-card";
+
+    div.innerHTML = `
+      <img src="imagens/${p.imagens[0]}" alt="${p.nome}">
+      <h2>${p.nome}</h2>
+      <p>${p.resumo}</p>
+      <div>${p.tags.map(t => `<span class='tag'>${t}</span>`).join(" ")}</div>
+    `;
+
+    // 👉 Clique abre modal
+    div.onclick = () => abrirModal(p);
+
+    characterList.appendChild(div);
+  });
+}
+
+function abrirModal(personagem) {
+  currentCharacter = personagem;
+  currentImageIndex = 0;
+
+  modalName.textContent = personagem.nome;
+  modalDescription.textContent = personagem.descricao;
+  modalImage.src = `imagens/${personagem.imagens[currentImageIndex]}`;
+
+  modal.classList.add("active");
+  modalOverlay.classList.add("active");
+}
+
+function fecharModal() {
+  modal.classList.remove("active");
+  modalOverlay.classList.remove("active");
+}
+
+closeModal.onclick = fecharModal;
+modalOverlay.onclick = fecharModal;
+
+// Navegação do carrossel
+prevImage.onclick = () => trocarImagem(-1);
+nextImage.onclick = () => trocarImagem(1);
+
+function trocarImagem(direcao) {
+  if (!currentCharacter) return;
+
+  const total = currentCharacter.imagens.length;
+  currentImageIndex = (currentImageIndex + direcao + total) % total;
+
+  modalImage.src = `imagens/${currentCharacter.imagens[currentImageIndex]}`;
+}
