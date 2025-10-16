@@ -63,6 +63,7 @@ header {
 #characterList {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  background: #666161;
   gap: 20px;
   padding: 1rem;
 }
@@ -96,3 +97,4 @@ header {
   display: inline-block;
   font-size: 0.8em;
 }
+
