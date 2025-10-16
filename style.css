@@ -76,7 +76,7 @@ header {
 #closeFilters {
   position: absolute;
   top: 1%;
-  right: 50px;
+  right: 1%;
   border: 2px solid #ccc;
   border-radius: 50%;
   width: 30px;
@@ -156,6 +156,7 @@ header {
   display: inline-block;
   font-size: 0.8em;
 }
+
 
 
 
