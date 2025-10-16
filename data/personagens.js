@@ -1,7 +1,7 @@
 var personagens = [
   {
     nome: "Amargo",
-    imagens: ["Amargo1.jpg"],
+    imagens: ["Amargo1.jpg", "Amargo2.png"],
     resumo: "Elfo das profundezas, líder de dragão dormente e faz juz ao nome.",
     descricao: "Líder da Guilda Revival Chronicles em Taverna do Dragão Dormente desde 4400, Amargo é severo, grosso e contantemente descarta a utilidade de aventureiros que não se provam, perdeu seu braço direito, alguns dedos da mão esquerda, parte da mobilidade de seu joelho e sua boca é rasgada do queixo ao nariz.",
     nascimento: "85º do Inverno, ano 3984",
