@@ -1,4 +1,4 @@
-// Elementos principais
+// === ELEMENTOS PRINCIPAIS ===
 const searchInput = document.getElementById("searchInput");
 const characterList = document.getElementById("characterList");
 const filterButton = document.getElementById("filterButton");
@@ -16,29 +16,24 @@ window.onload = () => {
   renderCharacters(personagens);
 };
 
-// Exibe menu de filtros com animação e desfoque
+// Exibe menu de filtros
 filterButton.onclick = () => {
   filterMenu.classList.add("active");
   overlay.classList.add("active");
   filterMenu.classList.remove("hidden");
 };
 
-// Fecha ao clicar no botão ✕
+// Fecha o menu
 closeFilters.onclick = fecharMenu;
-
-// Fecha ao clicar fora do menu
 overlay.onclick = fecharMenu;
 
 function fecharMenu() {
   filterMenu.classList.remove("active");
   overlay.classList.remove("active");
-  // após a animação, recoloca o display:none
-  setTimeout(() => {
-    filterMenu.classList.add("hidden");
-  }, 300); // mesmo tempo da transição no CSS
+  setTimeout(() => filterMenu.classList.add("hidden"), 300);
 }
 
-// Renderiza lista de personagens
+// === RENDERIZAÇÃO DE PERSONAGENS ===
 function renderCharacters(lista) {
   characterList.innerHTML = "";
   lista.forEach(p => {
@@ -52,17 +47,16 @@ function renderCharacters(lista) {
       <div>${p.tags.map(t => `<span class='tag'>${t}</span>`).join(" ")}</div>
     `;
 
+    div.onclick = () => abrirModal(p);
     characterList.appendChild(div);
   });
 }
 
-// Cria as opções de filtro por tag
+// === FILTROS ===
 function renderTags() {
   tagList.innerHTML = "";
-
   for (const categoria in TODAS_AS_TAGS) {
     const grupo = TODAS_AS_TAGS[categoria];
-
     const categoriaDiv = document.createElement("div");
     categoriaDiv.className = "categoria-tags";
 
@@ -72,31 +66,25 @@ function renderTags() {
 
     for (const key in grupo) {
       const valor = grupo[key];
-
       const label = document.createElement("label");
       label.className = "tag-option";
-
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.value = valor;
-
       checkbox.onchange = () => {
         if (checkbox.checked) selectedTags.add(valor);
         else selectedTags.delete(valor);
         applyFilters();
       };
-
       label.appendChild(checkbox);
       label.append(" " + valor);
       categoriaDiv.appendChild(label);
       categoriaDiv.appendChild(document.createElement("br"));
     }
-
     tagList.appendChild(categoriaDiv);
   }
 }
 
-// Aplica busca + filtros
 searchInput.oninput = applyFilters;
 
 function applyFilters() {
@@ -112,43 +100,24 @@ function applyFilters() {
       p.tags.some(tag => selectedTags.has(tag))
     );
   }
-
   renderCharacters(filtrados);
 }
 
-// === MODAL DE DETALHES ===
+// === MODAL COM CARROSSEL ===
 const modal = document.getElementById("characterModal");
 const modalOverlay = document.getElementById("modalOverlay");
 const closeModal = document.getElementById("closeModal");
 const modalName = document.getElementById("modalName");
-const modalImage = document.getElementById("modalImage");
 const modalDescription = document.getElementById("modalDescription");
 const prevImage = document.getElementById("prevImage");
 const nextImage = document.getElementById("nextImage");
 
+// Elementos dinâmicos do carrossel
+let carouselTrack, indicator;
 let currentCharacter = null;
 let currentImageIndex = 0;
-
-// Evento para abrir o modal ao clicar em um personagem
-function renderCharacters(lista) {
-  characterList.innerHTML = "";
-  lista.forEach(p => {
-    const div = document.createElement("div");
-    div.className = "character-card";
-
-    div.innerHTML = `
-      <img src="imagens/${p.imagens[0]}" alt="${p.nome}">
-      <h2>${p.nome}</h2>
-      <p>${p.resumo}</p>
-      <div>${p.tags.map(t => `<span class='tag'>${t}</span>`).join(" ")}</div>
-    `;
-
-    // 👉 Clique abre modal
-    div.onclick = () => abrirModal(p);
-
-    characterList.appendChild(div);
-  });
-}
+let startX = 0;
+let isDragging = false;
 
 function abrirModal(personagem) {
   currentCharacter = personagem;
@@ -156,7 +125,39 @@ function abrirModal(personagem) {
 
   modalName.textContent = personagem.nome;
   modalDescription.textContent = personagem.descricao;
-  modalImage.src = `imagens/${personagem.imagens[currentImageIndex]}`;
+
+  // Cria o carrossel dinamicamente
+  const container = document.getElementById("carouselContainer");
+  container.innerHTML = `
+    <button id="prevImage" class="carousel-btn">‹</button>
+    <div id="carouselTrack"></div>
+    <button id="nextImage" class="carousel-btn">›</button>
+    <div id="indicator"></div>
+  `;
+
+  carouselTrack = document.getElementById("carouselTrack");
+  indicator = document.getElementById("indicator");
+
+  personagem.imagens.forEach(img => {
+    const el = document.createElement("img");
+    el.src = `imagens/${img}`;
+    el.className = "carousel-image fade-in";
+    carouselTrack.appendChild(el);
+  });
+
+  atualizarCarrossel();
+
+  // Eventos
+  document.getElementById("prevImage").onclick = () => mudarImagem(-1);
+  document.getElementById("nextImage").onclick = () => mudarImagem(1);
+
+  carouselTrack.addEventListener("mousedown", iniciarArraste);
+  carouselTrack.addEventListener("touchstart", iniciarArraste);
+  carouselTrack.addEventListener("mousemove", moverArraste);
+  carouselTrack.addEventListener("touchmove", moverArraste);
+  carouselTrack.addEventListener("mouseup", terminarArraste);
+  carouselTrack.addEventListener("mouseleave", terminarArraste);
+  carouselTrack.addEventListener("touchend", terminarArraste);
 
   modal.classList.add("active");
   modalOverlay.classList.add("active");
@@ -170,15 +171,46 @@ function fecharModal() {
 closeModal.onclick = fecharModal;
 modalOverlay.onclick = fecharModal;
 
-// Navegação do carrossel
-prevImage.onclick = () => trocarImagem(-1);
-nextImage.onclick = () => trocarImagem(1);
-
-function trocarImagem(direcao) {
-  if (!currentCharacter) return;
-
+function mudarImagem(direcao) {
   const total = currentCharacter.imagens.length;
   currentImageIndex = (currentImageIndex + direcao + total) % total;
+  atualizarCarrossel();
+}
 
-  modalImage.src = `imagens/${currentCharacter.imagens[currentImageIndex]}`;
+function atualizarCarrossel() {
+  const total = currentCharacter.imagens.length;
+  carouselTrack.style.transition = "transform 0.4s ease";
+  carouselTrack.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+
+  // Fade effect
+  carouselTrack.querySelectorAll("img").forEach((img, i) => {
+    img.classList.toggle("fade-in", i === currentImageIndex);
+  });
+
+  indicator.textContent = `${currentImageIndex + 1} / ${total}`;
+}
+
+// === Funções de arrasto ===
+function iniciarArraste(e) {
+  isDragging = true;
+  startX = e.type.includes("touch") ? e.touches[0].clientX : e.clientX;
+  carouselTrack.style.transition = "none";
+}
+
+function moverArraste(e) {
+  if (!isDragging) return;
+  const currentX = e.type.includes("touch") ? e.touches[0].clientX : e.clientX;
+  const deltaX = currentX - startX;
+  carouselTrack.style.transform = `translateX(calc(-${currentImageIndex * 100}% + ${deltaX}px))`;
+}
+
+function terminarArraste(e) {
+  if (!isDragging) return;
+  isDragging = false;
+  const endX = e.type.includes("touch") ? e.changedTouches[0].clientX : e.clientX;
+  const deltaX = endX - startX;
+
+  if (deltaX > 80) mudarImagem(-1);
+  else if (deltaX < -80) mudarImagem(1);
+  else atualizarCarrossel();
 }
