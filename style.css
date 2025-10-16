@@ -123,11 +123,10 @@ header {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.95);
-  background: #fff;
+  background: #787878;
   border-radius: 12px;
   padding: 1.5rem;
   width: 90%;
-  max-width: 600px;
   z-index: 30;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   opacity: 0;
@@ -241,7 +240,7 @@ header {
 }
 
 .character-card {
-  background: #787878;
+  background: #fefefe;
   border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 0 8px rgba(0,0,0,0.1);
